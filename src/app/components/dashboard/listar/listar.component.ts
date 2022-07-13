@@ -10,7 +10,7 @@ import { Contenido } from '../../../models/contenido';
   styleUrls: ['./listar.component.css']
 })
 export class ListarComponent implements OnInit {
-  age_size: any = 3;
+  page_size: any = 3;
   page_number: any = 1;
   pageSizeOptions = [3]
 
