@@ -1,95 +1,73 @@
-<div class="wrap">
-  <div class="store-wrapper">
-    <div class="left">
-      <div class="category-list">
-        <h1>BUSCAR CONTENIDOS</h1>
-        <div class="buscar">
-          <input
-            type="text"
-            name="busqueda"
-            [(ngModel)]="filterContenidos"
-            matTooltip="Buscar contenidos"
-            autocomplete="off"
-          />
-        </div>
-      </div>
-      <div class="category-list">
-        <h1>CATEGORIA DE CONTENIDOS</h1>
-        <button
-          class="titulo"
-          *ngFor="let categoria of listCategoria"
-          (click)="filterContenidos = categoria"
-          mat-stroked-button
-          color="primary"
-        >
-          {{ categoria }}
-        </button>
-      </div>
+<div class="flex-container">
+  <aside class="aside">
+    <h1>BUSCAR</h1>
+    <div class="buscar">
+      <input
+        type="text"
+        name="busqueda"
+        [(ngModel)]="filterContenidos"
+        matTooltip="Buscar contenidos"
+        autocomplete="off"
+      />
     </div>
-    <div class="rigth">
-      <section class="contenidos-list">
-        <mat-card
-          *ngFor="
-            let contenido of listContenidos
-              | filter: filterContenidos
-              | paginate: page_size:page_number
-          "
-          class="example-card my-card"
-        >
-          <mat-card-header>
-            <mat-card-title class="titulo">{{
-              contenido.titulo | uppercase
-            }}</mat-card-title>
-          </mat-card-header>
-          <img mat-card-image src="{{ contenido.imagen }}" alt="" />
-          <mat-card-content>
-            <p>
-              <mat-card-subtitle
-                ><strong>Disponible hasta: </strong>
-                {{ contenido.fechaDeAccesoLimite | date: "MM/dd/yyyy" }}
-              </mat-card-subtitle>
-            </p>
-          </mat-card-content>
-          <mat-card-subtitle
-            ><strong class="etiqueta">{{
-              contenido.etiquetas
-            }}</strong></mat-card-subtitle
-          >
-          <mat-card-actions>
-            <header id="header" class="header">
-              <a
-                (click)="
-                  cambiarEstado(contenido._id, contenido);
-                  obtenerContenido(
-                    contenido.titulo,
-                    contenido.descripcion,
-                    contenido.imagen
-                  )
-                "
-                href="#modal"
-                class="cta"
-              >
-                Ver mas</a
-              >
-            </header>
-          </mat-card-actions>
-        </mat-card>
-      </section>
-      <h3
-        style="text-align: center; margin-top: 10px"
-        *ngIf="(listContenidos | filter: filterContenidos).length === 0"
+    <div class="category-list">
+      <h1>CATEGORIAS</h1>
+      <button
+        *ngFor="let categoria of listCategoria"
+        (click)="filterContenidos = categoria"
+        mat-stroked-button
+        color="primary"
       >
-        No se encontro ningun contenido
-      </h3>
+        {{ categoria }}
+      </button>
     </div>
-  </div>
-  <mat-paginator
-    [length]="listContenidos.length"
-    [pageSize]="page_size"
-    [pageSizeOptions]="pageSizeOptions"
-    (page)="handlePage($event)"
-  >
-  </mat-paginator>
+  </aside>
+  <section class="section wrapper">
+    <div
+      *ngFor="
+        let contenido of listContenidos
+          | filter: filterContenidos
+          | paginate: page_size:page_number
+      "
+      class="container-card"
+    >
+      <div class="banner-img"></div>
+      <img src="{{ contenido.imagen }}" alt="" class="contenido-img" />
+      <h1 class="title">
+        {{ contenido.titulo | uppercase }}
+      </h1>
+      <p class="descripcion">
+        <strong>Disponible hasta: </strong>
+        {{ contenido.fechaDeAccesoLimite | date: "MM/dd/yyyy" }}
+      </p>
+      <a
+        href="#modal"
+        (click)="
+          cambiarEstado(contenido._id, contenido);
+          obtenerContenido(
+            contenido.titulo,
+            contenido.descripcion,
+            contenido.imagen
+          )
+        "
+        class="btn"
+        >Ver Mas</a
+      >
+    </div>
+    <h3
+      style="text-align: center; margin-top: 10px"
+      *ngIf="(listContenidos | filter: filterContenidos).length === 0"
+    >
+      No se encontro ningun contenido
+    </h3>
+    <mat-paginator
+      [length]="listContenidos.length"
+      [pageSize]="page_size"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="handlePage($event)"
+    >
+    </mat-paginator>
+  </section>
 </div>
 <section id="modal" class="modal">
   <div class="modal-container">
