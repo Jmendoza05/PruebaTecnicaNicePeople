@@ -8,7 +8,7 @@ import { Contenido } from '../models/contenido';
   providedIn: 'root'
 })
 export class ContenidoService {
-private url = 'http://localhost:4000/api/contenidos/';
+private url = 'https://node-server-nice.herokuapp.com/api/contenidos';
   constructor(private http: HttpClient) { }
 
   getContenidos():Observable<any>{
